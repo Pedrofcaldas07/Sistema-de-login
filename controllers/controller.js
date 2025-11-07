@@ -36,7 +36,6 @@ export const criarUser = async (req, res) => {
     const hashedPw = await bcrypt.hash(senha, saltRounds);
 
     model.criarUser(nome, email, cleanCpf, hashedPw);
-    console.log(`User criado com ID`);
     res.json({ message: "Usuário registrado com sucesso!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -48,9 +47,9 @@ export const procurarUser = async (req, res) => {
   try{
     const isMatch = await bcrypt.compare(senha, user.senha);
     if (isMatch) {
-        return res.status(200).json({ 
-        message: user.id,
-        user_id: user.id})
+      return res.status(200).json({ 
+      message: user.id,
+      user_id: user.id})
     } else {
       return res.status(401).json({ message: "Credenciais invalidas" });
     }
