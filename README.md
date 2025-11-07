@@ -81,22 +81,22 @@ sistemaLogin/
 ---
 
 ## Rotas da API
-### Base url: ```http://localhost:3000/```
+#### Base url: ```http://localhost:3000/```
 
-### 1. Registrar
+#### 1. Registrar
   POST ```/register```
 
-### 2. Login
+#### 2. Login
   POST ```/login```
 
-### 3. Perfil
+#### 3. Perfil
   GET ```/perfil```
 
-### 4. Editar usuario
+#### 4. Editar usuario
   PATCH ```/perfil/edit/:id```
 
-### 5. Deletar usuario
+#### 5. Deletar usuario
   DELETE ```/perfil/delete/:id```
 
-### 6. Mostrar usuarios
+#### 6. Mostrar usuarios
   GET ```/buscar/usuarios```
