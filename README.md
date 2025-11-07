@@ -60,14 +60,14 @@ sistemaLogin/
 ├── controllers/
 │   └── controller.js
 │
-├── models/ │
+├── models/
 │   └── models.js
 │
-├── routes/ │
+├── routes/
 │   └── routes.js
 │
-├── config/ │
-│   └── db.js │
+├── config/
+│   └── db.js
 │
 └── view
     └── index.html
