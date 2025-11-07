@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Registro</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background: #f5f6fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .container {
+        width: 700px;
+        height: 450px;
+        display: flex;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+      .esquerda {
+        flex: 1;
+        background-color: #6c5ce7;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        text-align: center;
+      }
+      .direita {
+        flex: 1;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+      }
+      input {
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      button {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #6c5ce7;
+        color: #fff;
+        transition: 0.3s;
+      }
+      button:hover {
+        transform: scale(1.05);
+      }
+      .link {
+        font-size: 14px;
+        color: #555;
+      }
+      .link a {
+        color: #6c5ce7;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="esquerda">
+        <h1>Crie sua conta</h1>
+        <p>Preencha os campos abaixo</p>
+      </div>
+      <div class="direita">
+        <input type="text" id="nome" placeholder="Nome completo" />
+        <input type="email" id="email" placeholder="E-mail" />
+        <input type="password" id="senha" placeholder="Senha" />
+        <input type="text" id="cpf" placeholder="CPF" />
+        <button onclick="registrar()">Registrar</button>
+        <div class="link">Já tem conta? <a href="/login">Faça login</a></div>
+      </div>
+    </div>
+    <script>
+      async function registrar() {
+        const nome = document.getElementById("nome").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value.trim();
+        const cpf = document.getElementById("cpf").value.trim();
+
+        if (!email || !senha) {
+          alert("Preencha todos os campos.");
+          return;
+        }
+
+        try {
+          const targetUrl = window.location.origin + "/register";
+
+          const response = await fetch(targetUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, senha, cpf }),
+          });
+
+          if (response.status === 201 || response.status === 200) {
+            console.log("Cadastro realizado com sucesso!");
+            window.location.href = "/login";
+          } else if (response.status >= 400 && response.status < 500) {
+              console.log(`Erro no cadastro: ${result.message || 'Dados inválidos.'}`)
+          } else {
+              console.log("Erro interno do servidor. Tente novamente mais tarde.");
+          }
+
+        } catch (error) {
+          console.error("Erro:", error);
+        }
+      }
+    </script>
+  </body>
+</html>

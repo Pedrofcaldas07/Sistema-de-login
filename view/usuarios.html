@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Lista de Usuários</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 700px;
+            height: 450px;
+            display: flex;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .esquerda {
+            flex: 1;
+            background-color: #6c5ce7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .esquerda h1 { font-size: 24px; margin-bottom: 10px; }
+        .esquerda p { opacity: 0.9; }
+        .userContainer {
+            flex: 1.5;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+        }
+
+        #listaUsuarios {
+            flex-grow: 1;
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-right: 5px; 
+            margin-bottom: 15px;
+        }
+        .usuarioCard {
+            display: flex;
+            align-items: center;
+            background: #f1f2f6;
+            border-radius: 10px;
+            padding: 15px;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+        .usuarioCard:hover {
+            background: #e9e8ff;
+            transform: scale(1.01);
+        }
+        .avatar { 
+            width: 60px; 
+            height: 60px; 
+            min-width: 60px;
+            border-radius: 50%;
+            background: #fff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); 
+        }
+        .avatar svg { width: 30px; height: 30px; fill: #6c5ce7; }
+        .userInfo {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            color: #333;
+        }
+        .userInfo strong {
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .acoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .botoes {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #e2e8f0;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .botoes svg path { fill: #0f172a; transition: 0.3s; }
+        .botoes:hover {
+            transform: scale(1.05);
+            background-color: #6c5ce7;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+        }
+        .botoes:hover svg path { fill: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="esquerda">
+            <h1>Usuários</h1>
+            <p>Visualize todos os usuários cadastrados.</p>
+        </div>
+        <div class="userContainer">
+            <div id="listaUsuarios">
+            </div>
+            <div class="acoes">
+                <button class="botoes" title="Voltar para o Perfil" onclick="window.location.href='/perfil'">
+                    <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        async function puxarUsers(){
+            const container = document.getElementById('listaUsuarios'); 
+            
+            try{
+                const response = await fetch('/buscar/usuarios', {
+                    method: "GET"
+                });
+                if(response.ok){
+                    const dataBruta = await response.json();
+                    const usuariosParaMapear = Array.isArray(dataBruta) && Array.isArray(dataBruta[0]) 
+                                               ? dataBruta[0] 
+                                               : [];
+                                               
+                    if (usuariosParaMapear.length > 0) {
+                        container.innerHTML = ''; 
+                        
+                        const cartoesHTML = usuariosParaMapear.map(usuario => {
+                            const id = usuario.id; 
+                            const nome = usuario.nome;      
+                            const email = usuario.email;    
+                            const cpf = usuario.cpf; 
+                            return `
+                                <div class="usuarioCard">
+                                    <div class="avatarIcon">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="userInfo">
+                                        <div><strong>Nome:</strong><span class="userName"> ${nome}</span></div>
+                                        <div><strong>Email:</strong><span class="userEmail"> ${email}</span></div>
+                                        <div><strong>CPF:</strong><span class="userCpf"> ${cpf || 'Não informado'}</span></div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+        
+                        container.innerHTML = cartoesHTML; 
+                    } else {
+                        container.innerHTML = '<p>Nenhum usuário encontrado no sistema.</p>';
+                    }
+                } else {
+                     const erroMsg = response.status === 204 ? "Nenhum conteúdo encontrado." : `Erro ao buscar usuários. Status: ${response.status}`;
+                     container.innerHTML = `<p>${erroMsg}</p>`;
+                     console.error("Erro na requisição, status:", response.status);
+                }
+            } catch (error) {
+                console.error("Erro de conexão ou JSON inválido:", error);
+                container.innerHTML = '<p>Não foi possível processar a resposta do servidor.</p>';
+            }
+        }
+        window.onload = puxarUsers;
+    </script>
+</body>
+</html>
