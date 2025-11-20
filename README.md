@@ -38,15 +38,7 @@ CREATE TABLE usuarios (
     senha VARCHAR(250) NOT NULL
 );
 ```
-
-#### 3. Inicie o servidor:
-```bash
-npm start
-```
-
----
-
-#### 4. Configure o .env
+#### 3. Configure o .env
 ```bash
 DB_HOST=''
 DB_USER=''
@@ -56,7 +48,12 @@ DB_PORT=
 PORT=
 );
 ```
+#### 4. Inicie o servidor:
+```bash
+npm start
+```
 
+---
 ## Estrutura de pastas
 ```bash
 sistemaLogin/
