@@ -46,6 +46,17 @@ npm start
 
 ---
 
+#### 4. Configure o .env
+```bash
+DB_HOST=''
+DB_USER=''
+DB_PASSWORD=''
+DB_NAME=''
+DB_PORT=
+PORT=
+);
+```
+
 ## Estrutura de pastas
 ```bash
 sistemaLogin/
