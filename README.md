@@ -36,7 +36,6 @@ CREATE TABLE usuarios (
     email VARCHAR(120) NOT NULL,
     cpf varchar(100) NOT NULL UNIQUE,
     senha VARCHAR(250) NOT NULL
-);
 ```
 #### 3. Crie e configure o .env
 ```bash
