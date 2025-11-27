@@ -36,6 +36,7 @@ CREATE TABLE usuarios (
     email VARCHAR(120) NOT NULL,
     cpf varchar(100) NOT NULL UNIQUE,
     senha VARCHAR(250) NOT NULL
+);
 ```
 #### 3. Crie e configure o .env
 ```bash
@@ -45,7 +46,6 @@ DB_PASSWORD=''
 DB_NAME=''
 DB_PORT=
 PORT=
-);
 ```
 #### 4. Inicie o servidor:
 ```bash
