@@ -10,7 +10,7 @@ Este projeto é uma aplicação de um sistema de login com node.js
 ```bash
 npm install - y
 ```
-Configure o package.json: 
+Confira o package.json: 
 ```bash
 {
   "name": "sistemalogin",
@@ -26,7 +26,7 @@ Instale as dependencias:
 ```bash
 npm install bcrypt dotenv express http mysql2 nodemon router
 ```
-#### 2. Configure o banco de dados sql
+#### 2. Crie e configure o banco de dados sql
 ```bash
 CREATE DATABASE sistemaLogin;
 USE sistemaLogin;
@@ -38,7 +38,7 @@ CREATE TABLE usuarios (
     senha VARCHAR(250) NOT NULL
 );
 ```
-#### 3. Configure o .env
+#### 3. Crie e configure o .env
 ```bash
 DB_HOST=''
 DB_USER=''
